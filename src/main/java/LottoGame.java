@@ -5,8 +5,8 @@ import java.util.stream.Stream;
 
 public class LottoGame {
     public static final String DELIMITER = ", ";
+    public static final int LOTTO_PRICE = 1000;
     private Lottos lottos;
-    private List<Integer> wonLotto;
 
     public LottoGame(Lottos lottos) {
         this.lottos = lottos;
@@ -17,25 +17,18 @@ public class LottoGame {
     }
 
     public Lottos buyLotto(int money) {
-        final int tryNum = money / 1000;
+        final int tryNum = money / LOTTO_PRICE;
         lottos = new Lottos(Stream.generate(LottoGenerator::createLottos).limit(tryNum).collect(Collectors.toList()));
         return lottos;
     }
 
     public LottoResult checkWin(String wonLottoString) {
-        wonLotto = Stream.of(wonLottoString.split(DELIMITER))
-                         .map(Integer::parseInt)
-                         .collect(Collectors.toList());
+        List<Integer> wonLotto = Stream.of(wonLottoString.split(DELIMITER))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
 
         final Map<Long, Long> matchCount = lottos.getMatchCount(wonLotto);
 
-
-        final double earnRate = (double) (matchCount.getOrDefault(3L, 0L) * 5000 +
-                                          matchCount.getOrDefault(4L, 0L) * 50000 +
-                                          matchCount.getOrDefault(5L, 0L) * 1500000 +
-                                          matchCount.getOrDefault(6L, 0L) * 2000000000) / (lottos.size() * 1000L);
-        final double formattedEarnRate = Math.floor(earnRate * 100) / 100.0;
-
-        return new LottoResult(matchCount.getOrDefault(3L, 0L), matchCount.getOrDefault(4L, 0L), matchCount.getOrDefault(5L, 0L), matchCount.getOrDefault(6L, 0L), formattedEarnRate);
+        return new LottoResult(lottos.size(), matchCount.getOrDefault(3L, 0L), matchCount.getOrDefault(4L, 0L), matchCount.getOrDefault(5L, 0L), matchCount.getOrDefault(6L, 0L));
     }
 }

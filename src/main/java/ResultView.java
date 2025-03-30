@@ -1,5 +1,3 @@
-import java.util.List;
-
 public final class ResultView {
     private ResultView() {}
 

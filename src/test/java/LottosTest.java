@@ -32,8 +32,4 @@ class LottosTest {
         assertThat(matchCount.get(5L)).isEqualTo(1);
         assertThat(matchCount.get(6L)).isEqualTo(1);
     }
-
-    @Test
-    void getLottos() {
-    }
 }
