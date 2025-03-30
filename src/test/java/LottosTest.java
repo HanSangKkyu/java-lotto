@@ -1,22 +1,21 @@
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LottosTest {
     private Lottos lottos;
 
     @BeforeEach
     void setUp() {
-        lottos = new Lottos(List.of(List.of(1, 2, 3, 4, 5, 6),
-                                    List.of(1, 2, 3, 4, 5, 7),
-                                    List.of(1, 2, 3, 4, 7, 8),
-                                    List.of(1, 2, 3, 7, 8, 9),
-                                    List.of(1, 2, 7, 8, 9, 10)));
+        lottos = new Lottos(List.of(new Lotto(List.of(1, 2, 3, 4, 5, 6)),
+                new Lotto(List.of(1, 2, 3, 4, 5, 7)),
+                new Lotto(List.of(1, 2, 3, 4, 7, 8)),
+                new Lotto(List.of(1, 2, 3, 7, 8, 9)),
+                new Lotto(List.of(1, 2, 7, 8, 9, 10))));
     }
 
     @Test
@@ -26,7 +25,7 @@ class LottosTest {
 
     @Test
     void getMatchCount() {
-        final Map<Long, Long> matchCount = lottos.getMatchCount(List.of(1, 2, 3, 4, 5, 6));
+        final Map<Long, Long> matchCount = lottos.getMatchCount(new Lotto(List.of(1, 2, 3, 4, 5, 6)));
         assertThat(matchCount.get(3L)).isEqualTo(1);
         assertThat(matchCount.get(4L)).isEqualTo(1);
         assertThat(matchCount.get(5L)).isEqualTo(1);
