@@ -1,8 +1,11 @@
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
+package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
 
 public class LottoGameTest {
     @Test
@@ -30,6 +33,8 @@ public class LottoGameTest {
                 new Lotto(List.of(3, 8, 27, 30, 35, 44))
         ));
         final LottoGame lottoGame = new LottoGame(lottos);
-        assertThat(lottoGame.checkWin("1, 2, 3, 4, 5, 6").equals(new LottoResult(14, 1, 0, 0, 0))).isEqualTo(true);
+        final Map<Rank, Long> rankToMatchCount = lottoGame.checkWin("1, 2, 3, 4, 5, 6", 7);
+        assertThat(rankToMatchCount.get(Rank.FIFTH)).isEqualTo(1L);
+        assertThat(rankToMatchCount.get(Rank.MISS)).isEqualTo(13L);
     }
 }

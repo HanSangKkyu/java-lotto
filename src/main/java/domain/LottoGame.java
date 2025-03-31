@@ -1,7 +1,11 @@
+package domain;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import util.LottoGenerator;
 
 public class LottoGame {
     public static final int LOTTO_PRICE = 1000;
@@ -21,11 +25,8 @@ public class LottoGame {
         return lottos;
     }
 
-    public LottoResult checkWin(String wonLottoString) {
-        Lotto wonLotto = new Lotto(wonLottoString);
-
-        final Map<Long, Long> matchCount = lottos.getMatchCount(wonLotto);
-
-        return new LottoResult(lottos.size(), matchCount.getOrDefault(3L, 0L), matchCount.getOrDefault(4L, 0L), matchCount.getOrDefault(5L, 0L), matchCount.getOrDefault(6L, 0L));
+    public Map<Rank, Long> checkWin(String wonLottoString, int bonusNumber) {
+        final Lotto wonLotto = new Lotto(wonLottoString);
+        return lottos.getMatchCount(wonLotto, bonusNumber);
     }
 }

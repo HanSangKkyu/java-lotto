@@ -1,8 +1,11 @@
-import java.util.List;
-import java.util.Map;
+package domain;
 
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+
+import java.util.List;
+import java.util.Map;
 
 public class Lottos {
     private final List<Lotto> lottos;
@@ -15,11 +18,10 @@ public class Lottos {
         return lottos.size();
     }
 
-    public Map<Long, Long> getMatchCount(Lotto wonLotto) {
+    public Map<Rank, Long> getMatchCount(Lotto wonLotto, int bonusNumber) {
         return lottos.stream()
-                .map(wonLotto::intersectionNum)
-                .filter(count -> count >= 3)
-                .collect(groupingBy(count -> count, counting()));
+                     .map(x -> Rank.valueOf(x.intersectionNum(wonLotto), x.contains(bonusNumber)))
+                     .collect(groupingBy(identity(), counting()));
     }
 
     public List<Lotto> getLottos() {
