@@ -13,4 +13,10 @@ class RankTest {
         assertThat(Rank.valueOf(SECOND_THIRD_MATCHING_COUNT, true)).isEqualTo(Rank.SECOND);
         assertThat(Rank.valueOf(SECOND_THIRD_MATCHING_COUNT, false)).isEqualTo(Rank.THIRD);
     }
+
+    @Test
+    void valueOf_IllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> Rank.valueOf(-1, true));
+        assertThrows(IllegalArgumentException.class, () -> Rank.valueOf(7, false));
+    }
 }
