@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Map;
 
 import domain.LottoGame;
@@ -9,8 +10,10 @@ public final class LottoMain {
     public static void main(String[] args) {
         final LottoGame lottoGame = new LottoGame();
         final int money = InputView.inputMoney();
+        final int manualLottoCount = InputView.inputManualLottoCount();
+        final List<String> manualLottoStrings = InputView.inputManualLottoStrings(manualLottoCount);
 
-        ResultView.printBuyLottoResult(lottoGame.buyLotto(money));
+        ResultView.printBuyLottoResult(lottoGame.buyLotto(money, manualLottoStrings), manualLottoCount);
 
         final String wonLottoString = InputView.inputWonLottoNumbers();
         final int bonusNumber = InputView.inputBonusNumber();

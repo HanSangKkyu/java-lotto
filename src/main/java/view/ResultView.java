@@ -10,9 +10,14 @@ import util.LottoResult;
 public final class ResultView {
     private ResultView() {}
 
-    public static void printBuyLottoResult(Lottos lottos) {
-        System.out.println("로또 구입을 " + lottos.size() + "개를 구매했습니다.");
-        lottos.getLottos().forEach(System.out::println);
+    public static void printBuyLottoResult(Lottos lottos, int manualLottoCount) {
+        System.out.println("수동으로 " + manualLottoCount + "장, 자동으로 " + (lottos.size() - manualLottoCount) + "개를 구매했습니다.\n");
+        lottos.getLottos().forEach(x -> {
+            x.getLottoNumbers().forEach(y -> {
+                System.out.print(y + " ");
+            });
+            System.out.println();
+        });
     }
 
     public static void printWonResult(Map<Rank, Long> matchCount) {

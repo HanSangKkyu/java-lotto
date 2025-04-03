@@ -32,6 +32,10 @@ public class Lotto {
                 .count();
     }
 
+    public List<Integer> getLottoNumbers() {
+        return lottoNumbers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

@@ -19,10 +19,23 @@ public class LottoGame {
         this(new Lottos(List.of()));
     }
 
-    public Lottos buyLotto(int money) {
+    public Lottos buyLotto(int money, List<String> manualLottoCount) {
         final int tryNum = money / LOTTO_PRICE;
-        lottos = new Lottos(Stream.generate(LottoGenerator::createLotto).limit(tryNum).collect(Collectors.toList()));
+        final List<Lotto> manualLottos = manualLottoCount.stream()
+                                                         .map(Lotto::new)
+                                                         .collect(Collectors.toList());
+
+        final int autoLottoCount = tryNum - manualLottoCount.size();
+        final List<Lotto> autoLottos = Stream.generate(LottoGenerator::createLotto)
+                                             .limit(autoLottoCount)
+                                             .collect(Collectors.toList());
+        autoLottos.addAll(manualLottos);
+        lottos = new Lottos(autoLottos);
         return lottos;
+    }
+
+    public Lottos buyLotto(int money) {
+        return buyLotto(money, List.of());
     }
 
     public Map<Rank, Long> checkWin(String wonLottoString, int bonusNumber) {
